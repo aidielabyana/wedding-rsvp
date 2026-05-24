@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RSVP – Abyana & Aidiel</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --burg: #6B1D2E; --burg-light: #8B2D42; --burg-mid: #3D0D1A;
+    --gold: #C4A96B; --gold-pale: #F7F0E2; --cream: #FDF8F2;
+    --text: #2A1A1F; --muted: #7A5A62;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at 30% 50%, #5A0F20 0%, #2A0810 55%, #150408 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 60px 24px; text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(45deg, rgba(196,169,107,0.03) 0px, rgba(196,169,107,0.03) 1px, transparent 1px, transparent 40px);
+  }
+  .corner { position: absolute; width: 120px; height: 120px; opacity: 0.25; }
+  .corner.tl { top: 24px; left: 24px; border-top: 1px solid var(--gold); border-left: 1px solid var(--gold); }
+  .corner.tr { top: 24px; right: 24px; border-top: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+  .corner.bl { bottom: 24px; left: 24px; border-bottom: 1px solid var(--gold); border-left: 1px solid var(--gold); }
+  .corner.br { bottom: 24px; right: 24px; border-bottom: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+
+  .hero-photo { width: 180px; height: 180px; border-radius: 50%; border: 3px solid var(--gold); overflow: hidden; margin-bottom: 36px; position: relative; z-index: 1; animation: fadeUp 1s ease both; }
+  .hero-photo .placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #7A1F35, #4A0D1C); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+  .hero-photo .placeholder svg { opacity: 0.5; }
+  .hero-photo .placeholder span { font-family: 'Cormorant Garamond', serif; font-size: 11px; letter-spacing: 2px; color: rgba(196,169,107,0.6); }
+
+  .hero-tag { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; position: relative; z-index: 1; animation: fadeUp 0.8s 0.1s ease both; }
+  .hero-names { font-family: 'Cormorant Garamond', serif; font-size: clamp(56px, 12vw, 96px); font-weight: 300; line-height: 0.95; color: #fff; position: relative; z-index: 1; animation: fadeUp 0.8s 0.2s ease both; }
+  .hero-names em { font-style: italic; color: var(--gold); }
+  .hero-names .amp { display: block; font-size: 0.55em; color: rgba(196,169,107,0.7); margin: 6px 0; }
+
+  .rule { display: flex; align-items: center; gap: 14px; justify-content: center; margin: 28px 0 20px; position: relative; z-index: 1; animation: fadeUp 0.8s 0.3s ease both; }
+  .rule span { width: 60px; height: 1px; background: var(--gold); opacity: 0.4; }
+  .rule i { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); display: block; }
+
+  .hero-date { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; color: rgba(255,255,255,0.75); position: relative; z-index: 1; animation: fadeUp 0.8s 0.35s ease both; }
+  .hero-time { display: inline-block; margin-top: 12px; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); border: 1px solid rgba(196,169,107,0.35); padding: 7px 22px; position: relative; z-index: 1; animation: fadeUp 0.8s 0.4s ease both; }
+
+  .scroll-hint { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 1; animation: fadeUp 1s 1s ease both; }
+  .scroll-hint span { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(196,169,107,0.5); }
+  .scroll-hint .arrow { width: 1px; height: 32px; background: linear-gradient(to bottom, rgba(196,169,107,0.5), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+
+  /* DETAILS */
+  .details { background: var(--cream); padding: 80px 24px; display: flex; flex-direction: column; align-items: center; }
+  .sec-eyebrow { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--burg); margin-bottom: 10px; text-align: center; }
+  .sec-title { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 300; font-style: italic; color: var(--burg-mid); text-align: center; margin-bottom: 48px; }
+  .cards { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 720px; }
+  .card { background: #fff; border: 1px solid rgba(107,29,46,0.1); border-top: 3px solid var(--burg); padding: 28px 24px; flex: 1 1 160px; max-width: 200px; text-align: center; transition: box-shadow 0.2s; }
+  .card:hover { box-shadow: 0 8px 32px rgba(107,29,46,0.08); }
+  .card .c-icon { font-size: 26px; margin-bottom: 12px; }
+  .card .c-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+  .card .c-val { font-family: 'Cormorant Garamond', serif; font-size: 19px; color: var(--burg-mid); line-height: 1.35; }
+
+  /* RSVP */
+  .rsvp-wrap { background: var(--burg); padding: 80px 24px; display: flex; flex-direction: column; align-items: center; }
+  .rsvp-wrap .sec-eyebrow { color: var(--gold); }
+  .rsvp-wrap .sec-title { color: #fff; margin-bottom: 40px; }
+
+  .form-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(196,169,107,0.2); padding: 40px 36px; width: 100%; max-width: 520px; }
+
+  .field { margin-bottom: 28px; }
+  .field label { display: block; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 10px; }
+  .field input, .field select {
+    width: 100%; background: rgba(255,255,255,0.07);
+    border: none; border-bottom: 1px solid rgba(196,169,107,0.3);
+    color: #fff; font-family: 'Jost', sans-serif; font-size: 16px;
+    padding: 10px 0; outline: none; transition: border-color 0.2s;
+    -webkit-appearance: none; border-radius: 0;
+  }
+  .field input::placeholder { color: rgba(255,255,255,0.25); }
+  .field input:focus, .field select:focus { border-bottom-color: var(--gold); }
+  .field select option { background: var(--burg-mid); color: #fff; }
+
+  .attend-btns { display: flex; gap: 12px; }
+  .attend-btn { flex: 1; padding: 14px; border: 1px solid rgba(196,169,107,0.35); background: transparent; color: rgba(255,255,255,0.6); font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+  .attend-btn.selected { background: var(--gold); border-color: var(--gold); color: var(--burg-mid); font-weight: 500; }
+  .attend-btn:hover:not(.selected) { border-color: rgba(196,169,107,0.7); color: rgba(255,255,255,0.9); }
+
+  .submit-btn { width: 100%; margin-top: 8px; background: var(--gold); border: none; color: var(--burg-mid); font-family: 'Jost', sans-serif; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; font-weight: 500; padding: 18px; cursor: pointer; transition: opacity 0.2s; }
+  .submit-btn:hover { opacity: 0.9; }
+  .submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .form-err { color: #ffaaaa; font-size: 13px; margin-top: 10px; display: none; text-align: center; }
+  .form-err.show { display: block; }
+
+  .success-state { display: none; text-align: center; padding: 20px 0; }
+  .success-state.show { display: block; animation: fadeUp 0.5s ease both; }
+  .success-state .s-icon { font-size: 48px; margin-bottom: 16px; }
+  .success-state p { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-style: italic; color: var(--gold); }
+  .success-state small { display: block; margin-top: 8px; font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 1px; }
+
+  /* WISHES */
+  .wishes-wrap { background: var(--gold-pale); padding: 80px 24px; display: flex; flex-direction: column; align-items: center; }
+  .wishes-wrap .sec-title { color: var(--burg-mid); margin-bottom: 8px; }
+  .wishes-wrap .sec-sub { font-size: 14px; color: var(--muted); margin-bottom: 40px; text-align: center; }
+
+  .wish-composer { width: 100%; max-width: 580px; background: #fff; border-top: 3px solid var(--burg); padding: 28px; }
+  .wish-composer input { width: 100%; border: none; border-bottom: 1px solid rgba(107,29,46,0.15); font-family: 'Jost', sans-serif; font-size: 15px; color: var(--text); padding: 8px 0; outline: none; margin-bottom: 20px; background: transparent; }
+  .wish-composer input::placeholder { color: #cbb0b8; }
+  .wish-composer textarea { width: 100%; border: none; font-family: 'Cormorant Garamond', serif; font-size: 19px; font-style: italic; color: var(--burg-mid); resize: none; min-height: 80px; outline: none; background: transparent; }
+  .wish-composer textarea::placeholder { color: #cbb0b8; font-style: italic; }
+  .wish-footer { display: flex; justify-content: flex-end; margin-top: 16px; }
+  .wish-send { background: var(--burg); border: none; color: #fff; font-family: 'Jost', sans-serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; padding: 12px 28px; cursor: pointer; transition: background 0.2s; }
+  .wish-send:hover { background: var(--burg-light); }
+
+  .wishes-feed { width: 100%; max-width: 580px; margin-top: 32px; display: flex; flex-direction: column; gap: 14px; }
+  .wish-bubble { background: #fff; border-left: 3px solid var(--gold); padding: 18px 22px; animation: fadeUp 0.4s ease both; }
+  .wish-bubble .wb-name { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--burg); margin-bottom: 6px; }
+  .wish-bubble .wb-msg { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-style: italic; color: var(--burg-mid); line-height: 1.5; }
+
+  /* FOOTER */
+  footer { background: var(--burg-mid); padding: 48px 24px; text-align: center; }
+  footer .f-names { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; font-style: italic; color: var(--gold); margin-bottom: 10px; }
+  footer .f-sub { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.25); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes scrollPulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="corner tl"></div><div class="corner tr"></div>
+  <div class="corner bl"></div><div class="corner br"></div>
+
+  <div class="hero-photo">
+    <div class="placeholder">
+      <svg width="44" height="44" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="17" r="8" stroke="#C4A96B" stroke-width="1.5"/>
+        <path d="M8 40c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="#C4A96B" stroke-width="1.5"/>
+        <circle cx="37" cy="15" r="5" stroke="#C4A96B" stroke-width="1.2"/>
+      </svg>
+      <span>Your Photo Here</span>
+    </div>
+  </div>
+
+  <p class="hero-tag">You are cordially invited</p>
+  <h1 class="hero-names">
+    <em>Abyana</em>
+    <span class="amp">&amp;</span>
+    <em>Aidiel</em>
+  </h1>
+  <div class="rule"><span></span><i></i><i></i><i></i><span></span></div>
+  <p class="hero-date">Saturday, 14th of June 2025</p>
+  <span class="hero-time">11:00 AM — 3:00 PM</span>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- DETAILS -->
+<section class="details">
+  <p class="sec-eyebrow">The Details</p>
+  <h2 class="sec-title">Ceremony & Celebration</h2>
+  <div class="cards">
+    <div class="card"><div class="c-icon">📅</div><p class="c-label">Date</p><p class="c-val">Saturday<br>14 June 2025</p></div>
+    <div class="card"><div class="c-icon">🕐</div><p class="c-label">Time</p><p class="c-val">11:00 AM<br>to 3:00 PM</p></div>
+    <div class="card"><div class="c-icon">📍</div><p class="c-label">Venue</p><p class="c-val">The Grand Rose Hall<br><small style="font-size:13px;color:#7A5A62">123 Blossom Lane, City</small></p></div>
+    <div class="card"><div class="c-icon">👗</div><p class="c-label">Dress Code</p><p class="c-val">Formal Attire<br><small style="font-size:13px;color:#7A5A62">Burgundy welcome</small></p></div>
+  </div>
+</section>
+
+<!-- RSVP -->
+<section class="rsvp-wrap" id="rsvp">
+  <p class="sec-eyebrow">Kindly reply by 1 June 2025</p>
+  <h2 class="sec-title">RSVP</h2>
+
+  <div class="form-card" id="formCard">
+    <div class="field">
+      <label>Will you attend? *</label>
+      <div class="attend-btns">
+        <button class="attend-btn selected" id="btnYes" onclick="setAttend('yes')">✓ Joyfully Accept</button>
+        <button class="attend-btn" id="btnNo" onclick="setAttend('no')">✗ Regretfully Decline</button>
+      </div>
+      <input type="hidden" id="rsvpAttend" value="yes">
+    </div>
+
+    <div class="field">
+      <label>Full Name *</label>
+      <input type="text" id="rsvpName" placeholder="Your full name">
+    </div>
+
+    <div class="field">
+      <label>Phone Number *</label>
+      <input type="tel" id="rsvpPhone" placeholder="+60 12 345 6789">
+    </div>
+
+    <div class="field">
+      <label>Number of Pax Attending</label>
+      <select id="rsvpGuests">
+        <option value="1">1 — Just myself</option>
+        <option value="2" selected>2 — Myself + 1</option>
+        <option value="3">3 Guests</option>
+        <option value="4">4 Guests</option>
+        <option value="5">5 Guests</option>
+        <option value="6+">6 or more</option>
+      </select>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitRSVP()">Confirm My Attendance →</button>
+    <p class="form-err" id="formErr">⚠ Please fill in your name and phone number.</p>
+
+    <div class="success-state" id="successState">
+      <div class="s-icon">🌹</div>
+      <p>Thank you! We can't wait to celebrate with you.</p>
+      <small>Your RSVP has been recorded.</small>
+    </div>
+  </div>
+</section>
+
+<!-- WISHES -->
+<section class="wishes-wrap" id="wishes">
+  <p class="sec-eyebrow">Leave a Message</p>
+  <h2 class="sec-title">Congratulations & Wishes</h2>
+  <p class="sec-sub">Share your love and well wishes for Abyana & Aidiel</p>
+
+  <div class="wish-composer">
+    <input type="text" id="wishName" placeholder="Your name">
+    <textarea id="wishText" placeholder="Write your congratulations here…"></textarea>
+    <div class="wish-footer">
+      <button class="wish-send" onclick="postWish()">Send Wishes ♥</button>
+    </div>
+  </div>
+
+  <div class="wishes-feed" id="wishesFeed">
+    <div class="wish-bubble">
+      <p class="wb-name">Sarah & Tom</p>
+      <p class="wb-msg">"Wishing you a lifetime of love, laughter and happiness. Congratulations, Abyana and Aidiel!"</p>
+    </div>
+    <div class="wish-bubble">
+      <p class="wb-name">The Tan Family</p>
+      <p class="wb-msg">"May your journey together be filled with endless joy and beautiful memories. Congratulations!"</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="f-names">Abyana & Aidiel</p>
+  <p class="f-sub">14 June 2025 &nbsp;·&nbsp; With Love</p>
+</footer>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbytCxmEHvyaFnYUfv8IvhoAgoP5Pke2_JlW0v94EPXK3EouCtvTg4LRynKay67647pnKA/exec';
+
+function setAttend(val) {
+  document.getElementById('rsvpAttend').value = val;
+  document.getElementById('btnYes').classList.toggle('selected', val === 'yes');
+  document.getElementById('btnNo').classList.toggle('selected', val === 'no');
+}
+
+async function submitRSVP() {
+  const attend = document.getElementById('rsvpAttend').value;
+  const name   = document.getElementById('rsvpName').value.trim();
+  const phone  = document.getElementById('rsvpPhone').value.trim();
+  const guests = document.getElementById('rsvpGuests').value;
+  const errEl  = document.getElementById('formErr');
+
+  if (!name || !phone) { errEl.classList.add('show'); return; }
+  errEl.classList.remove('show');
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true; btn.textContent = 'Sending…';
+
+  const params = new URLSearchParams({
+    timestamp: new Date().toLocaleString('en-MY', { timeZone: 'Asia/Kuala_Lumpur' }),
+    attend, name, phone, guests
+  });
+
+  try {
+    await fetch(SCRIPT_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' });
+  } catch(e) {}
+
+  btn.style.display = 'none';
+  document.getElementById('successState').classList.add('show');
+}
+
+function postWish() {
+  const name = document.getElementById('wishName').value.trim();
+  const text = document.getElementById('wishText').value.trim();
+  if (!name || !text) { alert('Please enter your name and a message.'); return; }
+  const feed = document.getElementById('wishesFeed');
+  const b = document.createElement('div');
+  b.className = 'wish-bubble';
+  b.innerHTML = `<p class="wb-name">${esc(name)}</p><p class="wb-msg">"${esc(text)}"</p>`;
+  feed.prepend(b);
+  document.getElementById('wishName').value = '';
+  document.getElementById('wishText').value = '';
+}
+
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+</script>
+</body>
+</html>
